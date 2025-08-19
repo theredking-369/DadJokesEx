@@ -18,7 +18,7 @@ namespace DadJokesApp.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> GetDadJoke()
+        public async Task<Joke> GetDadJoke()
         {
             string url = "https://icanhazdadjoke.com/";
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -26,7 +26,7 @@ namespace DadJokesApp.Services
 
             Joke joke = JsonConvert.DeserializeObject<Joke>(response);
 
-            return joke.joke;
+            return joke;
         }
     }
 }

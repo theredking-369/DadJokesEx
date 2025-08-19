@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using DadJokesApp.Services;
+using DadJokesApp.Views;
+using DadJokesApp.ViewModels;
 namespace DadJokesApp
 {
     public static class MauiProgram
@@ -18,6 +20,9 @@ namespace DadJokesApp
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<DadJokeApiService>();
+            builder.Services.AddSingleton<DisplayJokesViewModel>();
+            builder.Services.AddTransient<DisplayJokesView>();
 
             return builder.Build();
         }
