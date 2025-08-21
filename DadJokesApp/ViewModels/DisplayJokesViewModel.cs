@@ -2,6 +2,7 @@
 using DadJokesApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,15 +10,22 @@ using System.Windows.Input;
 
 namespace DadJokesApp.ViewModels
 {
-    public class DisplayJokesViewModel
+    public class DisplayJokesViewModel : BaseViewModel
     {
         private DadJokeApiService _dadJokeApiService;
-        private Joke _dadjoke;
 
-        public Joke DadJoke
+        
+
+        private ObservableCollection<Joke> _dadjoke;
+
+        public ObservableCollection<Joke> DadJoke
         {
             get { return _dadjoke; }
-            set { _dadjoke = value; }
+            set { _dadjoke = value;
+
+                OnPropertyChanged();
+
+            }
         }
 
         public ICommand GetDadJokeCommand { get; }
@@ -26,12 +34,18 @@ namespace DadJokesApp.ViewModels
         {
             _dadJokeApiService = dadJokeApiService;
 
+            DadJoke = new ObservableCollection<Joke>();
+
             GetDadJokeCommand = new Command(GetDadJokes);
         }
 
         private async void GetDadJokes(object obj)
         {
-            await _dadJokeApiService.GetDadJoke();
+            NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+            if (accessType == NetworkAccess.Internet)
+            {
+                DadJoke.Add(await _dadJokeApiService.GetDadJoke());
+            }
         }
     }
 }

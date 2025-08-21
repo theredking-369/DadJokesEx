@@ -27,6 +27,7 @@ namespace DadJokesApp.Services
             Joke joke = JsonConvert.DeserializeObject<Joke>(response);
 
             return joke;
+
         }
     }
 }

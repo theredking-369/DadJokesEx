@@ -1,3 +1,4 @@
+using DadJokesApp.Services;
 using DadJokesApp.ViewModels;
 namespace DadJokesApp.Views;
 
@@ -9,5 +10,7 @@ public partial class DisplayJokesView : ContentPage
 
 		BindingContext = 
 			vm;
+
+		
 	}
 }

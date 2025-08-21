@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DadJokesApp.Views.DisplayJokesView"
-             Title="DisplayJokesView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:models="clr-namespace:DadJokesApp.Models"
+             xmlns:viewModels="clr-namespace:DadJokesApp.ViewModels"
+             x:Class="DadJokesApp.Views.DisplayJokesView"   
+             Title="DisplayJokesView" x:DataType="viewModels:DisplayJokesViewModel"> 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+        <CollectionView ItemsSource="{Binding DadJoke}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Joke">
+                    <Label 
+                        Padding="5"
+                        Text="{Binding joke}"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+        
+
+        <Button Padding="5"  Grid.Row="1" Text="Generate Joke" Command="{Binding GetDadJokeCommand}"/>
+    </Grid>
 </ContentPage>
